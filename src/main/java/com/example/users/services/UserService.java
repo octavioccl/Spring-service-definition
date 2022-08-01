@@ -1,6 +1,7 @@
 package com.example.users.services;
 
 import com.example.users.models.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import com.google.common.io.Resources;
@@ -16,6 +17,7 @@ import java.util.List;
 
 
 @Service
+@Slf4j
 public class UserService {
 
     public List<User> getAll() throws IOException {
@@ -24,6 +26,7 @@ public class UserService {
         try (InputStream inputStream = Resources.getResource("static/people.json").openStream()) {
             text = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         } catch (Exception e) {
+            log.error("File not found");
         }
         Type listType = new TypeToken<ArrayList<User>>() {
         }.getType();
