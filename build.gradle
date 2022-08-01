@@ -13,9 +13,18 @@ repositories {
 }
 
 dependencies {
+	compileOnly 'org.projectlombok:lombok'
+	compileOnly 'commons-io:commons-io:2.11.0'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
+	implementation 'com.google.code.gson:gson'
+	implementation("com.google.guava:guava:31.1-jre")
+
+  }
 
 tasks.named('test') {
 	useJUnitPlatform()
