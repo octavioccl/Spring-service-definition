@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.google.common.io.Resources;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,10 +19,14 @@ import java.util.List;
 public class UserService {
 
     public List<User> getAll() throws IOException {
-        InputStream inputStream = Resources.getResource("static/people.json").openStream();
-        String json = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+
+        String text = "";
+        try (InputStream inputStream = Resources.getResource("static/people.json").openStream()) {
+            text = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+        } catch (Exception e) {
+        }
         Type listType = new TypeToken<ArrayList<User>>() {
         }.getType();
-        return new Gson().fromJson(json, listType);
+        return new Gson().fromJson(text, listType);
     }
 }
